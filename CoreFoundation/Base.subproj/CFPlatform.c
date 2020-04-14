@@ -324,6 +324,7 @@ CF_PRIVATE CFStringRef _CFStringCreateHostName(void) {
     return CFStringCreateWithCString(kCFAllocatorSystemDefault, myName, kCFPlatformInterfaceStringEncoding);
 }
 
+#if !TARGET_OS_WASI
 /* These are sanitized versions of the above functions. We might want to eliminate the above ones someday.
    These can return NULL.
 */
@@ -521,6 +522,7 @@ CF_EXPORT CFURLRef CFCopyHomeDirectoryURLForUser(CFStringRef uName) {
 #error Dont know how to compute users home directories on this platform
 #endif
 }
+#endif
 
 
 #undef CFMaxHostNameLength
@@ -732,7 +734,7 @@ static void __CFTSDFinalize(void *arg) {
         }
     }
 
-#if _POSIX_THREADS
+#if _POSIX_THREADS && !TARGET_OS_WASI
     if (table->destructorCount == PTHREAD_DESTRUCTOR_ITERATIONS - 1) {    // On PTHREAD_DESTRUCTOR_ITERATIONS-1 call, destroy our data
         free(table);
         
