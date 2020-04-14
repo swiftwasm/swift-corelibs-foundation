@@ -388,6 +388,7 @@ if(NOT CMAKE_SYSTEM_PROCESSOR STREQUAL wasm32)
     BlocksRuntime
     dispatch)
 else()
+  target_compile_definitions(CoreFoundation PRIVATE FOO)
   target_include_directories(CoreFoundation PRIVATE ../Sources/BlocksRuntime)
 endif()
 if(CMAKE_SYSTEM_NAME STREQUAL Android)
