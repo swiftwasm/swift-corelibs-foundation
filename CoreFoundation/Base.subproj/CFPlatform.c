@@ -1637,6 +1637,9 @@ CF_EXPORT char **_CFEnviron(void) {
     return *_NSGetEnviron();
 #elif TARGET_OS_WIN32
     return _environ;
+#elif TARGET_OS_WASI
+    extern char **environ;
+    return environ;
 #else
     return environ;
 #endif
@@ -1657,7 +1660,7 @@ int _CFOpenFile(const char *path, int opts) {
 }
 
 CF_CROSS_PLATFORM_EXPORT void *_CFReallocf(void *ptr, size_t size) {
-#if TARGET_OS_WIN32 || TARGET_OS_LINUX
+#if TARGET_OS_WIN32 || TARGET_OS_LINUX || TARGET_OS_WASI
     void *mem = realloc(ptr, size);
     if (mem == NULL && ptr != NULL && size != 0) {
         free(ptr);
@@ -2002,7 +2005,7 @@ CF_EXPORT int _CFPosixSpawn(pid_t *_CF_RESTRICT pid, const char *_CF_RESTRICT pa
     return _CFPosixSpawnImpl(pid, path, file_actions, attrp, argv, envp);
 }
 
-#elif !TARGET_OS_WIN32
+#elif !TARGET_OS_WIN32 && !TARGET_OS_WASI
 
 #include <spawn.h>
 
