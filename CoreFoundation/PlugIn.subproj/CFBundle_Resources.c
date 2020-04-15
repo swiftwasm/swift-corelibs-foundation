@@ -305,6 +305,8 @@ CF_EXPORT CFStringRef _CFBundleGetCurrentPlatform(void) {
 #endif
 #elif TARGET_OS_BSD
     return CFSTR("FreeBSD");
+#elif TARGET_OS_WASI
+    return CFSTR("WASI");
 #else
 #error Unknown or unspecified DEPLOYMENT_TARGET
 #endif
@@ -327,6 +329,8 @@ CF_PRIVATE CFStringRef _CFBundleGetPlatformExecutablesSubdirectoryName(void) {
 #endif
 #elif TARGET_OS_BSD
     return CFSTR("FreeBSD");
+#elif TARGET_OS_WASI
+    return CFSTR("WASI");
 #else
 #error Unknown or unspecified DEPLOYMENT_TARGET
 #endif
