@@ -234,8 +234,7 @@ CFRuntimeClass const * __CFRuntimeClassTable[__CFRuntimeClassTableSize * 2] __at
     [_kCFRuntimeIDCFMachPort] = &__CFMachPortClass,
 #endif
 
-
-
+#if !TARGET_OS_WASI
     [_kCFRuntimeIDCFRunLoopMode] = &__CFRunLoopModeClass,
     [_kCFRuntimeIDCFRunLoop] = &__CFRunLoopClass,
     [_kCFRuntimeIDCFRunLoopSource] = &__CFRunLoopSourceClass,
@@ -244,6 +243,8 @@ CFRuntimeClass const * __CFRuntimeClassTable[__CFRuntimeClassTableSize * 2] __at
     [_kCFRuntimeIDCFSocket] = &__CFSocketClass,
     [_kCFRuntimeIDCFReadStream] = &__CFReadStreamClass,
     [_kCFRuntimeIDCFWriteStream] = &__CFWriteStreamClass,
+#endif
+
     [_kCFRuntimeIDCFAttributedString] = &__CFAttributedStringClass,
     [_kCFRuntimeIDCFRunArray] = &__CFRunArrayClass,
     [_kCFRuntimeIDCFCharacterSet] = &__CFCharacterSetClass,
