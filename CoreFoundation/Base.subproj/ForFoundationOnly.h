@@ -63,6 +63,7 @@ CF_IMPLICIT_BRIDGING_DISABLED
 #include <objc/message.h>
 #endif
 
+#if __BLOCKS__
 /* These functions implement standard error handling for reallocation. Their parameters match their unsafe variants (realloc/CFAllocatorReallocate). They differ from reallocf as they provide a chance for you to clean up a buffers contents (in addition to freeing the buffer, etc.)
  
    The optional reallocationFailureHandler is called only when the reallocation fails (with the original buffer passed in, so you can clean up the buffer/throw/abort/etc.
@@ -71,8 +72,9 @@ CF_IMPLICIT_BRIDGING_DISABLED
  */
 CF_EXPORT void *_Nonnull __CFSafelyReallocate(void * _Nullable destination, size_t newCapacity, void (^_Nullable reallocationFailureHandler)(void *_Nonnull original, bool *_Nonnull outRecovered));
 CF_EXPORT void *_Nonnull __CFSafelyReallocateWithAllocator(CFAllocatorRef _Nullable, void * _Nullable destination, size_t newCapacity, CFOptionFlags options, void (^_Nullable reallocationFailureHandler)(void *_Nonnull original, bool *_Nonnull outRecovered));
+#endif
 
-
+#if !TARGET_OS_WASI
 #pragma mark - CFBundle
 
 #include <CoreFoundation/CFBundlePriv.h>
@@ -95,6 +97,7 @@ CF_EXPORT Boolean _CFBundleLoadExecutableAndReturnError(CFBundleRef bundle, Bool
 CF_EXPORT CFErrorRef _CFBundleCreateError(CFAllocatorRef _Nullable allocator, CFBundleRef bundle, CFIndex code);
 
 _CF_EXPORT_SCOPE_END
+#endif
 
 #pragma mark - CFUUID
 

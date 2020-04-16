@@ -18,7 +18,9 @@
 #include <CoreFoundation/CFPriv.h>
 #include "CFInternal.h"
 #include "CFLocaleInternal.h"
+#if !TARGET_OS_WASI
 #include "CFBundle_Internal.h"
+#endif
 #include <CoreFoundation/CFPriv.h>
 #if TARGET_OS_MAC || TARGET_OS_WIN32
 #include <CoreFoundation/CFBundle.h>
@@ -91,11 +93,12 @@
 #endif
 
 CF_PRIVATE os_log_t _CFOSLog(void) {
-    static os_log_t logger;
+    static os_log_t logger = NULL;
+
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    DISPATCH_ONCE_BEGIN_BLOCK(onceToken)
         logger = os_log_create("com.apple.foundation", "general");
-    });
+    DISPATCH_ONCE_END_BLOCK(onceToken)
     return logger;
 }
 
@@ -467,9 +470,7 @@ CONST_STRING_DECL(_kCFSystemVersionBuildStringKey, "Build")
 CF_EXPORT Boolean _CFExecutableLinkedOnOrAfter(CFSystemVersion version) {
     return true;
 }
-
-
-
+#endif
 
 #if TARGET_OS_OSX
 CF_PRIVATE void *__CFLookupCarbonCoreFunction(const char *name) {
@@ -637,7 +638,8 @@ CF_INLINE BOOL _CFCanChangeEUIDs(void) {
     return true;
 #endif
 }
-    
+
+#if !TARGET_OS_WASI
 typedef struct _ugids {
     uid_t _euid;
     uid_t _egid;
@@ -690,6 +692,7 @@ CF_EXPORT uid_t _CFGetEGID(void) {
     __CFGetUGIDs(NULL, &egid);
     return egid;
 }
+#endif
 
 const char *_CFPrintForDebugger(const void *obj) {
 	static char *result = NULL;
@@ -1633,7 +1636,7 @@ CF_EXPORT Boolean _CFExtensionIsValidToAppend(CFStringRef extension) {
 }
 
 
-#if DEPLOYMENT_RUNTIME_SWIFT
+#if DEPLOYMENT_RUNTIME_SWIFT && !TARGET_OS_WASI
 
 CFDictionaryRef __CFGetEnvironment() {
     static dispatch_once_t once = 0L;
