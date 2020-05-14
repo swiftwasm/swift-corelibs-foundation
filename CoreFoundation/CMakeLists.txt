@@ -571,7 +571,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL Darwin)
 endif()
 
 
-if(NOT CMAKE_SYSTEM_NAME STREQUAL wasi)
+if(NOT CMAKE_SYSTEM_NAME STREQUAL WASI)
   install(TARGETS
             CoreFoundation
             CFURLSessionInterface
@@ -579,6 +579,7 @@ if(NOT CMAKE_SYSTEM_NAME STREQUAL wasi)
           DESTINATION
             "${CMAKE_INSTALL_FULL_LIBDIR}")
 else()
+  message("will install CoreFoundation to ${CMAKE_INSTALL_FULL_LIBDIR}/$<LOWER_CASE:${CMAKE_SYSTEM_NAME}>")
   install(TARGETS
             CoreFoundation
             CFXMLInterface
