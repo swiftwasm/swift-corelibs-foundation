@@ -359,6 +359,7 @@ static CFDictionaryRef _CFCopyVersionDictionary(CFStringRef path) {
     return (CFDictionaryRef)plist;
 }
 
+#if !TARGET_OS_WASI
 CFStringRef _CFCopySystemVersionDictionaryValue(CFStringRef key) {
     CFStringRef versionString;
     CFDictionaryRef dict = _CFCopyServerVersionDictionary();
