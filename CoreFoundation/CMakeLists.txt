@@ -193,6 +193,13 @@ add_framework(CoreFoundation
                 PlugIn.subproj/CFBundle_BinaryTypes.h
                 PlugIn.subproj/CFBundle_Internal.h
                 PlugIn.subproj/CFPlugIn_Factory.h
+                # RunLoop
+                RunLoop.subproj/CFMachPort_Internal.h
+                RunLoop.subproj/CFMachPort_Lifetime.h
+                # Stream
+                Stream.subproj/CFStreamAbstract.h
+                Stream.subproj/CFStreamInternal.h
+                Stream.subproj/CFStreamPriv.h
                 # String
                 String.subproj/CFAttributedStringPriv.h
                 String.subproj/CFBurstTrie.h
