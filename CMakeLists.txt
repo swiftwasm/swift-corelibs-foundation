@@ -90,7 +90,7 @@ if(NOT BUILD_SHARED_LIBS)
 endif()
 
 set(swift_lib_dir "lib/swift")
-if(NOT BUILD_SHARED_LIBS AND NOT CMAKE_SYSTEM_NAME STREQUAL WASI)
+if(NOT BUILD_SHARED_LIBS)
   set(swift_lib_dir "lib/swift_static")
 endif()
 
