@@ -9,10 +9,6 @@
 
 import CoreFoundation
 
-#if os(WASI)
-import Glibc
-#endif
-
 public typealias TimeInterval = Double
 
 public var NSTimeIntervalSince1970: Double {
