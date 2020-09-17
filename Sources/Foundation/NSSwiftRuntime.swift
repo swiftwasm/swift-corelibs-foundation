@@ -16,6 +16,8 @@ import CoreFoundation
 @_exported import Darwin
 #elseif os(Linux) || os(Android) || CYGWIN
 @_exported import Glibc
+#elseif os(WASI)
+@_exported import WASILibc
 #elseif os(Windows)
 @_exported import MSVCRT
 #endif
