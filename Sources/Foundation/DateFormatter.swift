@@ -512,7 +512,6 @@ open class DateFormatter : Formatter {
     open var doesRelativeDateFormatting = false { willSet { _reset() } }
 }
 #else
-import Glibc
 
 extension tm {
     init(UTCSecondsSince1970: time_t) {

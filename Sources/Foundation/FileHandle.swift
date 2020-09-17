@@ -25,6 +25,11 @@ import Glibc
 fileprivate let _read = Glibc.read(_:_:_:)
 fileprivate let _write = Glibc.write(_:_:_:)
 fileprivate let _close = Glibc.close(_:)
+#elseif canImport(WASILibc)
+import WASILibc
+fileprivate let _read = WASILibc.read(_:_:_:)
+fileprivate let _write = WASILibc.write(_:_:_:)
+fileprivate let _close = WASILibc.close(_:)
 #endif
 
 extension NSError {
