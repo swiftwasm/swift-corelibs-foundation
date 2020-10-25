@@ -88,16 +88,25 @@ if(NOT BUILD_SHARED_LIBS)
       DESTINATION lib/swift_static/$<LOWER_CASE:${CMAKE_SYSTEM_NAME}>)
   endif()
 endif()
+
 # TODO(compnerd) install as a Framework as that is how swift actually is built
 install(DIRECTORY
           ${CMAKE_CURRENT_BINARY_DIR}/CoreFoundation.framework/Headers/
         DESTINATION
           lib/swift/CoreFoundation
         FILES_MATCHING PATTERN "*.h")
-install(FILES
-          CoreFoundation/Base.subproj/module.map
-        DESTINATION
-          lib/swift/CoreFoundation)
+if(CMAKE_SYSTEM_NAME STREQUAL WASI)
+  install(FILES
+            CoreFoundation/Base.subproj/$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:static/>wasm32-unknown-wasi.modulemap
+          DESTINATION
+            lib/swift/CoreFoundation
+          RENAME module.map)
+else()
+  install(FILES
+            CoreFoundation/Base.subproj/$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:static/>module.map
+          DESTINATION
+            lib/swift/CoreFoundation)
+endif()
 install(DIRECTORY
           ${CMAKE_CURRENT_BINARY_DIR}/CFURLSessionInterface.framework/Headers/
         DESTINATION
