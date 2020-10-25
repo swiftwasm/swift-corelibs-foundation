@@ -103,7 +103,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL WASI)
           RENAME module.map)
 else()
   install(FILES
-            CoreFoundation/Base.subproj/$<$<NOT:$<BOOL:${BUILD_SHARED_LIBS}>>:static/>module.map
+            CoreFoundation/Base.subproj/module.map
           DESTINATION
             lib/swift/CoreFoundation)
 endif()
